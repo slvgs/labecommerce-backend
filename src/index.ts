@@ -1,13 +1,8 @@
-console.log("HellowWorld")
+import { createProduct, getAllUsers, gettAllProducts, getProductById, queryProductsByName  } from "./database";
 
-import { Product } from "./database"
-import { Purchase } from "./database"
-import { Users } from "./database"
+console.log(queryProductsByName("Call Of Duty"))
 
 
 
 // console.log(`Usuario: ${Users}\n Produto: ${Product}\n Dados da Compra: ${Purchase}`)
 
-console.log(Users)
-console.log(Product)
-console.log(Purchase)

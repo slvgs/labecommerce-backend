@@ -18,3 +18,11 @@ export type TPurchase = {
     totalPrice: number
 
 }
+
+export enum CATEGORY_TYPE  {
+
+    GAMESTABULEIRO = "Tabuleiro",
+    GAMESPC = "PC",
+    GAMESCONSOLE = "Console"
+
+}
