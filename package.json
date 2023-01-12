@@ -1,16 +1,19 @@
 {
   "devDependencies": {
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.15",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^4.9.4",
     "typescritp": "^1.0.0"
   },
-
   "name": "typescript-i-exercicios",
   "description": "ATENÇÃO! Não forke nem clone esse repositório. Ele serve apenas como enunciado!<br><br>\r <strong>Você deve criar seu próprio repo pessoal chamado labecommerce-backend. Evite trabalhar na main e crie branches para organizar cada nova implementação ou refatoração. A de hoje por exemplo, pode se chamar typescript-i.</strong>\r ### Comando para criar a branch e já entrar nela\r ```\r git checkout -b typescript-i\r ```",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "start": "tsc && node ./build/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node-dev src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -21,5 +24,9 @@
   "bugs": {
     "url": "https://github.com/slvgs/typescript-i-exercicios/issues"
   },
-  "homepage": "https://github.com/slvgs/typescript-i-exercicios#readme"
+  "homepage": "https://github.com/slvgs/typescript-i-exercicios#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  }
 }
