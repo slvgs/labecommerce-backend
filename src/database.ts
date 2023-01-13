@@ -25,14 +25,14 @@ export const Users: TCliente[] = [
 
 export const Product: TProduct [] = [
     {
-        id: "2088",
+        id: "p2088",
         name: "RumiKub",
         price: 250.00 ,
         category: CATEGORY_TYPE.GAMESTABULEIRO
     },
 
     {
-        id: "2089",
+        id: "p2089",
         name: "Call Of Duty - Para PC",
         price: 150.00,
         category: CATEGORY_TYPE.GAMESPC
@@ -42,7 +42,7 @@ export const Product: TProduct [] = [
 
 export const Purchase: TPurchase []= [{
     userId: "gabriellaS",
-    productId: "2088",
+    productId: "p2088",
     quantity: 1,
     totalPrice: 250.00
 }]
