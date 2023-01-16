@@ -20,27 +20,75 @@ app.listen(3003, () => {
 
 //                   USERS 
 app.get('/users', (req: Request, res: Response) => {
+ 
+    
     res.status(200).send(Users)
 })
 
+
+
+
 app.post("/users", (req: Request, res: Response)=> {
-    const {id, email, password} = req.body as TCliente
 
-    const newClient = {
-        id,
-        email,
-        password
+
+    try {
+
+        const id = req.body.id;
+        const email = req.body.email
+        const password = req.body.password
+        
+        
+
+ 
+
+        const findId = Users.find((usuario) => usuario.id === id)
+        const findEmail = Users.find((em) => em.email === email)
+        
+        if(findId){
+            res.status(400)
+            throw new Error("Id Indisponivel")
+        }
+    
+        if(findEmail){
+            res.status(400)
+            throw new Error("Email indisponivel")
+
+        }
+
+
+        const newClient: TCliente = {
+            id,
+            email,
+            password
+        }
+    
+        Users.push(newClient)
+
+
+            
+    
+        res.status(201).send("Cliente registadro com sucesso.")
+    
+        
+    } catch (error: any) {
+        console.log(error)
+        if(res.statusCode === 200){
+            res.status(500)
+        }
+        res.send(error.message)
+
+        
     }
-
-    Users.push(newClient)
-
-
-    res.status(201).send("Cliente registadro com sucesso.")
 
 
 })
 
+
+
+
 app.delete('/users/:id', (req: Request, res: Response) => {
+
+    
     const id = req.params.id
      
     const indexRemove = Users.findIndex((users) => users.id === id)
@@ -88,13 +136,51 @@ app.get('/products', (req:Request, res: Response) => {
 })
 
 
-app.get('/products/search', (req:Request, res: Response) => {
-    const q = req.query.q as string
-    const result = Product.filter((pro) => {
-        return pro.name.toLocaleLowerCase().includes(q)
-    }) 
+app.get('/products/searchName', (req:Request, res: Response) => {
 
-    res.status(200).send(result)
+    try {
+
+        const q = req.query.q as string
+
+        
+        if(q.length < 1){
+            return res.status(400).send("Deve haver ao menos 1 caractere")
+
+        
+
+        }
+
+
+
+        const result = Product.filter((pro) => {
+            return pro.name.toLocaleLowerCase().includes(q)
+        }) 
+    
+        res.status(200).send(result)
+
+
+       
+
+        
+        
+    } catch (error: any) {
+        console.log(error)
+
+        if (res.statusCode === 200) {
+            res.send(500)
+        }
+        res.send(error.message)
+
+       
+
+        
+
+        
+    }
+
+
+
+
 })
 
 
@@ -110,18 +196,41 @@ app.delete('/products/:id', (req: Request, res: Response) => {
 })
 
 app.post("/products", (req: Request, res: Response) => {
-    const {id, name, price, category } = req.body as TProduct
 
-    const newProduct = {
-        id,
-         name,
-          price,
-           category
+
+    try {
+
+        const {id, name, price, category } = req.body as TProduct
+
+        const findId = Product.find((prod) => prod.id === id)
+
+        if(findId){
+            res.status(400)
+            throw new Error("ID de produto Indisponivel! ")
+        }
+
+        const newProduct: TProduct = {
+            id,
+             name,
+              price,
+               category
+        }
+    
+        Product.push(newProduct)
+    
+        res.status(201).send('Produto Cadastrado com sucesso')
+    
+        
+    } catch (error: any) {
+        console.log(error)
+        if(res.statusCode === 200){
+            res.status(500)
+        }
+        res.send(error.message)
+
+
+        
     }
-
-    Product.push(newProduct)
-
-    res.status(201).send('Produto Cadastrado com sucesso')
 })
 
 app.get("/products/searchId", (req: Request, res: Response) => {
@@ -162,12 +271,12 @@ app.put("/products/:id", (req: Request, res: Response) => {
 
 //                         PURCHASE
 
-app.get("/purchase", (req: Request, res: Response) => [
+app.get("/purchases", (req: Request, res: Response) => [
     res.status(200).send(Purchase)
 ])
 
 
-app.get("/purchase/search", (req: Request, res: Response) => {
+app.get("/purchases/search", (req: Request, res: Response) => {
     const q = req.query.q as string
     const result = Purchase.filter((purchases) => {
         return purchases.userId.toLocaleLowerCase().includes(q)
@@ -178,24 +287,63 @@ app.get("/purchase/search", (req: Request, res: Response) => {
 
 
 
-app.post("/purchase", (res: Response, req: Request) => {
+app.post("/purchases", ( req: Request, res: Response) => {
     // const {userId, productId, quantity, totalPrice} = req.body as TPurchase
 
-    const userId = req.body.userId
-    const productId = req.body.productId
-    const quantity = req.body.quantity
-    const totalPrice = req.body.totalPrice
 
-    const newPurchase: TPurchase = {
-        userId : userId,
-        productId : productId,
-        quantity: quantity,
-        totalPrice: totalPrice
-    }
+    try {
 
-    Purchase.push(newPurchase)
+        const userId = req.body.userId
+        const productId = req.body.productId
+        const quantity = req.body.quantity
+        const price = req.body.price
+        const totalPrice = req.body.totalPrice
     
-    res.status(201).send("Nova compra registrada com sucesso!")
+    
+        const findId = Purchase.find((purchase) => purchase.productId === productId)
+        const findUser = Purchase.find((purchase) => purchase.userId === userId)
+        
+    
+        if(!findUser){
+            res.status(400)
+            throw new Error("Esse ID não foi encontrado")
+        }
+    
+        if(!findId){
+            res.status(400)
+            throw new Error("Esse ID não foi encontrado")
+        }
+    
+        if(findId.price * quantity !== totalPrice){
+            res.status(400)
+            throw new Error("Valor errado")
+        }
+    
+        
+    
+        const newPurchase: TPurchase = {
+            userId,
+            productId,
+            quantity,
+            price,
+            totalPrice
+        }
+    
+        Purchase.push(newPurchase)
+        
+        res.status(201).send("Nova compra registrada com sucesso!")
+        
+    } catch (error: any) {
+
+        console.log(error)
+        if(res.statusCode === 200){
+            res.status(500)
+        }
+       res.send(error.message)
+
+
+        
+    }
 })
 
 
