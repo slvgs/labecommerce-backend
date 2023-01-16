@@ -40,12 +40,15 @@ export const Product: TProduct [] = [
 ]
 
 
-export const Purchase: TPurchase []= [{
+export const Purchase: TPurchase []= [
+    {
     userId: "gabriellaS",
     productId: "p2088",
     quantity: 1,
+    price: 250.00,
     totalPrice: 250.00
-}]
+}
+]
 
 
 export function createUser(id: string, email: string, password: string): string{
@@ -86,11 +89,12 @@ export function queryProductsByName(q: string ): TProduct[]{
 }
 
 
-export function createPurchase(userId: string, productId: string, quantity: number, totalPrice: number): any{
+export function createPurchase(userId: string, productId: string, quantity: number, totalPrice: number, price:number): any{
     Purchase.push({
         userId,
         productId,
         quantity,
+        price,
         totalPrice
     })
 }
