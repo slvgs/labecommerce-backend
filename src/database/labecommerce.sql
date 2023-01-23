@@ -106,7 +106,39 @@ clientes.password,
 purchases.*
 FROM clientes
 INNER JOIN purchases
-ON purchases.buyer_id = clientes.id
+ON purchases.buyer_id = clientes.id;
+
+
+-- Mostre em uma query todas as colunas das tabelas relacionadas (purchases_products, purchases e products).
+
+CREATE TABLE purchases_products
+(purchase_id TEXT NOT NULL,
+product_id TEXT NOT NULL,
+quantify INTEGER NOT NULL, 
+Foreign Key (purchase_id) REFERENCES purchases(id),
+Foreign Key (product_id) REFERENCES products(id));
+
+
+SELECT * FROM purchases_products;
+
+--Popule sua tabela simulando 3 compras
+
+INSERT INTO purchases_products(purchase_id, product_id, quantify)
+VALUES("C01", "P2088", 3), ("C02", "P2089", 1), ("C03", "P2090", 5);
+
+
+SELECT
+purchases.id AS purchaseID,
+products.id AS productsID,
+products.name AS productName, 
+purchases_products.quantify,
+purchases.buyer_id,
+purchases.total_price
+FROM purchases_products
+INNER JOIN purchases
+ON purchases_products.purchase_id = purchases.id
+INNER JOIN products
+ON purchases_products.product_id = products.id;
 
 
 
