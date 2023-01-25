@@ -1,5 +1,5 @@
 export type TCliente = {
-    id: string
+    id: any
     email: string
     password: string
 };

@@ -1,17 +1,17 @@
-CREATE TABLE clientes(
+CREATE TABLE users(
     id INTEGER PRIMARY KEY UNIQUE NOT NULL ,
     email TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL);
 
-SELECT * FROM clientes;
+SELECT * FROM users;
 
-INSERT INTO clientes (id, email, password)
+INSERT INTO users (id, email, password)
 VALUES
 (1, "gabriella@labenu.com", "astrodev"),
 (2, "vitoria@labenu.com", "vitoria123"),
 (3, "amandaB@labenu.com", "amanda123");
 
-DROP TABLE clientes;
+DROP TABLE users;
 
 -------------------------------------------------------------------------------------------
 --PRODUCTS:
@@ -48,10 +48,10 @@ INSERT INTO products (id, name, price, category)
 DELETE FROM products
 WHERE id = "p2088";
 
-DELETE FROM clientes 
+DELETE FROM users 
 WHERE id = 3;
 
-UPDATE clientes
+UPDATE users
 SET email = "gabriellasilverio@labenu.com"
 WHERE id = 3;
 
@@ -100,13 +100,13 @@ WHERE id="C01";
 
 -- ---------- COM INNER JOIN estou JUNTANDO AMBAS TABELAS --------------------
 SELECT
-clientes.id as clienteID,
-clientes.email, 
-clientes.password,
+users.id as clienteID,
+users.email, 
+users.password,
 purchases.*
-FROM clientes
+FROM users
 INNER JOIN purchases
-ON purchases.buyer_id = clientes.id;
+ON purchases.buyer_id = users.id;
 
 
 -- Mostre em uma query todas as colunas das tabelas relacionadas (purchases_products, purchases e products).

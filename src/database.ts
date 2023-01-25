@@ -6,13 +6,13 @@ import { TPurchase } from "./type";
 export const Users: TCliente[] = [
 
     {
-        id: "gabriellaS",
+        id: "1",
         email: "gabriella@labenu.com",
         password: "astrodev"
     },
 
     {
-        id: "vitoriazinha",
+        id: "2",
         email: "vitoria@labenu.com",
         password: "vitoria123"
 
